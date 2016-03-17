@@ -58,4 +58,10 @@ public class Login {
         loggedIn = false;
         return "index";
     }
+    
+    public String logout() {
+        currentUser = null;
+        loggedIn = false;
+        return "index";
+    }
 }

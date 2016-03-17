@@ -28,6 +28,9 @@
             <c:if test="#{!login.loggedIn}">
                 <h:commandButton value="Login" action="login" />
             </c:if>
+            <c:if test="#{login.loggedIn}">
+                <h:commandButton value="Logout" action="#{login.logout()}"/>
+            </c:if>
             <h:commandButton value="Register" action="signup" />
         </h:form>
     </h:body>
