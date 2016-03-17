@@ -1,16 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Sign Up</title>
+        <link rel='stylesheet' href='css.css'></link>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p>Register Username: <h:inputText value="#{SignUp.username}" /></p>
+            <p>Register Password: <h:inputSecret value="#{SignUp.password}" /></p>
+            <p>Confirm Password: <h:inputSecret value="#{SignUp.confirmPassword}" /></p>
+            <h:commandButton value="Sign Up" action="#{SignUp.register()}" />
+            <h:commandButton value="Return" action="index" />
+        </h:form>
+    </h:body>
 </html>
