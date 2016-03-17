@@ -15,6 +15,9 @@
             <c:if test="#{login.loggedIn}">
                 <h:commandButton value="Edit" action="#{posts.editPost()}" />
             </c:if>
+            <c:if test="#{login.loggedIn}">
+                <h:commandButton value="Edit" action="#{posts.deletePost()}" />
+            </c:if>
             <c:if test="#{!login.loggedIn}">
                 <h:commandButton value="Login" action="login" />
             </c:if>
