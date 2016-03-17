@@ -34,17 +34,11 @@ public class Posts {
     private List<Post> posts;
     private Post currentPost;
 
-    /**
-     * No-arg Constructor -- sets up list from DB
-     */
     public Posts() {
         currentPost = new Post(-1, -1, "", null, "");
         getPostsFromDB();
     }
 
-    /**
-     * Wipe the Posts list and update it from the DB
-     */
     private void getPostsFromDB() {
         try (Connection conn = DBUtils.getConnection()) {
             posts = new ArrayList<>();
@@ -67,30 +61,14 @@ public class Posts {
         }
     }
 
-    /**
-     * Retrieve the List of Post objects
-     *
-     * @return the List of Post objects
-     */
     public List<Post> getPosts() {
         return posts;
     }
 
-    /**
-     * Retrieve the current Post
-     *
-     * @return the registered Current Post
-     */
     public Post getCurrentPost() {
         return currentPost;
     }
 
-    /**
-     * Retrieve a Post by ID
-     *
-     * @param id the ID to search for
-     * @return the post -- null if not found
-     */
     public Post getPostById(int id) {
         for (Post p : posts) {
             if (p.getId() == id) {
@@ -100,12 +78,6 @@ public class Posts {
         return null;
     }
 
-    /**
-     * Retrieve a Post by title
-     *
-     * @param title the title to search for
-     * @return the post -- null if not found
-     */
     public Post getPostByTitle(String title) {
         for (Post p : posts) {
             if (p.getTitle().equals(title)) {
@@ -115,55 +87,27 @@ public class Posts {
         return null;
     }
 
-    /**
-     * Navigate to a specific post to view
-     *
-     * @param post the post to view
-     * @return the navigation rule
-     */
     public String viewPost(Post post) {
         currentPost = post;
         return "viewPost";
     }
 
-    /**
-     * Navigate to add a new post
-     *
-     * @return the navigation rule
-     */
     public String addPost() {
         currentPost = new Post(-1, -1, "", null, "");
         return "editPost";
     }
 
-    /**
-     * Navigate to edit the current post
-     *
-     * @return the navigation rule
-     */
     public String editPost() {
         return "editPost";
     }
 
-    /**
-     * Navigate away from editing a post without saving
-     *
-     * @return the navigation rule
-     */
     public String cancelPost() {
-        // currentPost can be corrupted -- reset it based on the DB
         int id = currentPost.getId();
         getPostsFromDB();
         currentPost = getPostById(id);
         return "viewPost";
     }
 
-    /**
-     * Navigate away from editing a post and save it
-     *
-     * @param user the current user editing the post
-     * @return the navigation rule
-     */
     public String savePost(User user) {
         try (Connection conn = DBUtils.getConnection()) {
             // If there's a current post, update rather than insert
@@ -189,5 +133,19 @@ public class Posts {
         // Update the currentPost so that its details appear after navigation
         currentPost = getPostByTitle(currentPost.getTitle());
         return "viewPost";
+    }
+    
+    public String deletePost(){
+        try (Connection conn = DBUtils.getConnection()) {
+            String sql = "DELETE FROM posts WHERE title = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, currentPost.getTitle());
+            pstmt.executeUpdate();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Posts.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        getPostsFromDB();
+        return "index";
     }
 }
