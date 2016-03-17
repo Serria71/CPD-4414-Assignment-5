@@ -6,8 +6,9 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>Simple Blog</title>
+        <link rel='stylesheet' href='css.css'></link>
+        <h1>Simple Blog</h1>
     </h:head>
-    
     <h:body>
         <h:form>
             <h:dataTable value="#{posts.posts}" var="post">
@@ -17,7 +18,7 @@
                 <h:column>
                     #{users.getUsernameById(post.user_id)}
                 </h:column>
-                <h:column>
+                <h:column class="column">
                     #{post.createdTime.toLocaleString()}
                 </h:column>
             </h:dataTable>
